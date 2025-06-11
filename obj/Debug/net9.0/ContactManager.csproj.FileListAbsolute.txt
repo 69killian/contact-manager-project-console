@@ -1,0 +1,15 @@
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\bin\Debug\net9.0\ContactManager.exe
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\bin\Debug\net9.0\ContactManager.deps.json
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\bin\Debug\net9.0\ContactManager.runtimeconfig.json
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\bin\Debug\net9.0\ContactManager.dll
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\bin\Debug\net9.0\ContactManager.pdb
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.AssemblyInfoInputs.cache
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.AssemblyInfo.cs
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.csproj.CoreCompileInputs.cache
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.sourcelink.json
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.dll
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\refint\ContactManager.dll
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.pdb
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ContactManager.genruntimeconfig.cache
+C:\Users\marty\Desktop\ContactManagerCS\ContactManager\obj\Debug\net9.0\ref\ContactManager.dll
