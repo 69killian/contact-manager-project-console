@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ContactNamespace;
+using GestionContact;
 
 namespace ContactManager
 {
@@ -14,7 +15,7 @@ namespace ContactManager
         static void Main(string[] args)
         {
             // Chargement initial des contacts depuis le fichier
-            List<Contact> ContactList = Contact.ChargerContacts();
+            List<Contact> ContactList = GestionContact.GestionContact.ChargerContacts();
             bool continuer = true;
 
             // Boucle principale du programme
@@ -36,17 +37,17 @@ namespace ContactManager
                 switch (choix)
                 {
                     case "1": // Ajout d'un contact
-                        Contact contact = new Contact();
+                        GestionContact.GestionContact contact = new GestionContact.GestionContact();
                         contact.AjouterContact();
                         ContactList.Add(contact);
-                        Contact.SauvegarderContacts(ContactList);
+                        GestionContact.GestionContact.SauvegarderContacts(ContactList);
                         break;
 
                     case "2": // Suppression d'un contact
                         if (ContactList.Count > 0)
                         {
-                            Contact.SupprimerContact(ContactList);
-                            Contact.SauvegarderContacts(ContactList);
+                            GestionContact.GestionContact.SupprimerContact(ContactList);
+                            GestionContact.GestionContact.SauvegarderContacts(ContactList);
                         }
                         else
                         {
@@ -55,22 +56,24 @@ namespace ContactManager
                         break;
 
                     case "3": // Affichage de la liste des contacts
-                        Contact.ListerContacts(ContactList);
+                        GestionContact.GestionContact.ListerContacts(ContactList);
                         break;
 
                     case "4": // Recherche d'un contact
-                        Contact.RechercherContact(ContactList);
+                        GestionContact.GestionContact.RechercherContact(ContactList);
                         break;
 
                     case "5": // Modification d'un contact
-                        Contact.ModifierContact(ContactList);
-                        Contact.SauvegarderContacts(ContactList);
+                        GestionContact.GestionContact.ModifierContact(ContactList);
+                        GestionContact.GestionContact.SauvegarderContacts(ContactList);
                         break;
-                    case "6": // Trier les contacts
-                        Contact.TrierContacts(ContactList);
+
+                    case "6": // Tri des contacts
+                        GestionContact.GestionContact.TrierContacts(ContactList);
                         break;
+
                     case "7": // Sauvegarde et sortie
-                        Contact.SauvegarderContacts(ContactList);
+                        GestionContact.GestionContact.SauvegarderContacts(ContactList);
                         continuer = false;
                         break;
 
