@@ -77,17 +77,27 @@ namespace ContactNamespace
                     Contact c = ContactList[i];
                     Console.WriteLine($"[{i + 1}] Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
                 }
+                Console.WriteLine("Nombre de contacts : " + ContactList.Count);
 
                 // Suppression du contact sélectionné
                 Console.WriteLine("\nEntrez le numéro du contact à supprimer : ");
-                if (int.TryParse(Console.ReadLine(), out int choix) && choix >= 1 && choix <= ContactList.Count)
+                Console.WriteLine("Est-ce que vous voulez vraiment supprimer ce contact ? (O/N)");
+                string? reponse = Console.ReadLine() ?? string.Empty;
+                if (reponse.ToLower() == "o")
                 {
-                    ContactList.RemoveAt(choix - 1);
-                    Console.WriteLine("Contact supprimé avec succès !");
+                    if (int.TryParse(Console.ReadLine(), out int choix) && choix >= 1 && choix <= ContactList.Count)
+                    {
+                        ContactList.RemoveAt(choix - 1);
+                        Console.WriteLine("Contact supprimé avec succès !");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Numéro de contact invalide !");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Numéro de contact invalide !");
+                    Console.WriteLine("Suppression annulée !");
                 }
             }
             catch (Exception ex)
@@ -118,6 +128,7 @@ namespace ContactNamespace
                     Contact c = ContactList[i];
                     Console.WriteLine($"[{i + 1}] Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
                 }
+                Console.WriteLine("Nombre de contacts : " + ContactList.Count);
 
                 // Sélection et modification du contact
                 Console.WriteLine("\nEntrez le numéro du contact à modifier : ");
@@ -197,6 +208,7 @@ namespace ContactNamespace
                 {
                     Console.WriteLine($"Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
                 }
+                Console.WriteLine("Nombre de contacts : " + ContactList.Count);
                 Console.WriteLine("--------------------");
             }
             catch (Exception ex)
@@ -259,6 +271,76 @@ namespace ContactNamespace
                 Console.WriteLine($"Erreur lors du chargement : {ex.Message}");
             }
             return contacts;
+        }
+
+        /// <summary>
+        /// Trie la liste des contacts par nom ou prénom, dans l'ordre ascendant ou descendant
+        /// </summary>
+        /// <param name="ContactList">La liste des contacts à trier</param>
+        public static void TrierContacts(List<Contact> ContactList)
+        {
+            try
+            {
+                if (ContactList.Count == 0)
+                {
+                    Console.WriteLine("Aucun contact à trier !");
+                    return;
+                }
+
+                // Affichage des options de tri
+                Console.WriteLine("\nTrier les contacts par :");
+                Console.WriteLine("1. Nom");
+                Console.WriteLine("2. Prénom");
+                Console.Write("Votre choix : ");
+
+                // Lecture et validation du choix de tri
+                if (!int.TryParse(Console.ReadLine(), out int choix) || (choix != 1 && choix != 2))
+                {
+                    Console.WriteLine("Choix invalide !");
+                    return;
+                }
+
+                // Choix de l'ordre de tri
+                Console.Write("Ordre ascendant (A) ou descendant (D) ? ");
+                string? ordre = Console.ReadLine()?.ToUpper();
+                
+                if (ordre != "A" && ordre != "D")
+                {
+                    Console.WriteLine("Choix invalide !");
+                    return;
+                }
+
+                // Application du tri selon les critères choisis
+                switch (choix)
+                {
+                    case 1: // Tri par nom
+                        ContactList.Sort((c1, c2) => c1.Nom.CompareTo(c2.Nom));
+                        break;
+                    case 2: // Tri par prénom
+                        ContactList.Sort((c1, c2) => c1.Prenom.CompareTo(c2.Prenom));
+                        break;
+                }
+
+                // Inversion de la liste si ordre descendant demandé
+                if (ordre == "D")
+                {
+                    ContactList.Reverse();
+                }
+
+                // Affichage des contacts triés
+                Console.WriteLine("\nListe des contacts triés :");
+                Console.WriteLine("------------------------");
+                foreach (Contact c in ContactList)
+                {
+                    Console.WriteLine($"Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
+                }
+                Console.WriteLine("------------------------");
+                Console.WriteLine("Contacts triés avec succès !");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors du tri : {ex.Message}");
+            }
         }
     }
 }

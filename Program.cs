@@ -27,7 +27,8 @@ namespace ContactManager
                 Console.WriteLine("3. Lister les contacts");
                 Console.WriteLine("4. Rechercher un contact");
                 Console.WriteLine("5. Modifier un contact");
-                Console.WriteLine("6. Sauvegarder et quitter");
+                Console.WriteLine("6. Trier les contacts");
+                Console.WriteLine("7. Sauvegarder et quitter");
                 Console.Write("Votre choix : ");
 
                 // Traitement du choix de l'utilisateur
@@ -65,8 +66,10 @@ namespace ContactManager
                         Contact.ModifierContact(ContactList);
                         Contact.SauvegarderContacts(ContactList);
                         break;
-
-                    case "6": // Sauvegarde et sortie
+                    case "6": // Trier les contacts
+                        Contact.TrierContacts(ContactList);
+                        break;
+                    case "7": // Sauvegarde et sortie
                         Contact.SauvegarderContacts(ContactList);
                         continuer = false;
                         break;
