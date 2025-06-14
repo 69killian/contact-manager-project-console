@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ContactNamespace;
+using System.Linq;
 
 namespace GestionContact
 {
@@ -15,11 +16,13 @@ namespace GestionContact
 
         /// <summary>
         /// Permet à l'utilisateur d'ajouter un nouveau contact en saisissant ses informations
+        /// Vérifie les doublons avant l'ajout
         /// </summary>
         public void AjouterContact()
         {
             try
             {
+                Console.WriteLine("=== Ajout d'un nouveau contact ===");
                 Console.WriteLine("Entrez le nom du contact : ");
                 Nom = Console.ReadLine() ?? string.Empty;
                 Console.WriteLine("Entrez le prenom du contact : ");
@@ -28,6 +31,54 @@ namespace GestionContact
                 Email = Console.ReadLine() ?? string.Empty;
                 Console.WriteLine("Entrez le numero de telephone du contact : ");
                 Telephone = Console.ReadLine() ?? string.Empty;
+
+                Console.WriteLine($"\nContact créé avec succès !");
+                Console.WriteLine($"Nom complet: {this.ToString()}");
+                Console.WriteLine($"ID unique: {this.Id}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de l'ajout du contact : {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Version statique pour ajouter un contact avec vérification des doublons
+        /// </summary>
+        public static void AjouterContactAvecVerification(List<Contact> ContactList)
+        {
+            try
+            {
+                Console.WriteLine("=== Ajout d'un nouveau contact ===");
+                Console.Write("Entrez le nom du contact : ");
+                string nom = Console.ReadLine() ?? string.Empty;
+                Console.Write("Entrez le prénom du contact : ");
+                string prenom = Console.ReadLine() ?? string.Empty;
+                Console.Write("Entrez l'email du contact : ");
+                string email = Console.ReadLine() ?? string.Empty;
+
+                // Vérifier les doublons
+                if (ContactExiste(ContactList, nom, prenom, email))
+                {
+                    Console.WriteLine("⚠️  Un contact avec ces informations existe déjà !");
+                    Console.Write("Voulez-vous continuer quand même ? (O/N) : ");
+                    string? reponse = Console.ReadLine()?.ToLower();
+                    if (reponse != "o" && reponse != "oui")
+                    {
+                        Console.WriteLine("Ajout annulé.");
+                        return;
+                    }
+                }
+
+                Console.Write("Entrez le numéro de téléphone du contact : ");
+                string telephone = Console.ReadLine() ?? string.Empty;
+
+                var nouveauContact = new Contact(nom, prenom, email, telephone);
+                ContactList.Add(nouveauContact);
+
+                Console.WriteLine($"\n✅ Contact créé avec succès !");
+                Console.WriteLine($"Nom complet: {nouveauContact.ToString()}");
+                Console.WriteLine($"ID unique: {nouveauContact.Id}");
             }
             catch (Exception ex)
             {
@@ -47,7 +98,7 @@ namespace GestionContact
                 for (int i = 0; i < ContactList.Count; i++)
                 {
                     Contact c = ContactList[i];
-                    Console.WriteLine($"[{i + 1}] Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
+                    Console.WriteLine($"[{i + 1}] {c.ToString()} (ID: {c.Id.ToString()[..8]}...)");
                 }
                 Console.WriteLine("Nombre de contacts : " + ContactList.Count);
 
@@ -55,7 +106,7 @@ namespace GestionContact
                 if (int.TryParse(Console.ReadLine(), out int choix) && choix >= 1 && choix <= ContactList.Count)
                 {
                     Contact contactASupprimer = ContactList[choix - 1];
-                    Console.WriteLine($"\nVoulez-vous vraiment supprimer le contact : {contactASupprimer.Nom} {contactASupprimer.Prenom} ? (O/N)");
+                    Console.WriteLine($"\nVoulez-vous vraiment supprimer le contact : {contactASupprimer.ToString()} ? (O/N)");
                     string? reponse = Console.ReadLine()?.ToLower() ?? "n";
 
                     if (reponse == "o" || reponse == "oui")
@@ -98,7 +149,7 @@ namespace GestionContact
                 for (int i = 0; i < ContactList.Count; i++)
                 {
                     Contact c = ContactList[i];
-                    Console.WriteLine($"[{i + 1}] Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
+                    Console.WriteLine($"[{i + 1}] {c.ToString()} (ID: {c.Id.ToString()[..8]}...)");
                 }
 
                 Console.WriteLine("\nEntrez le numéro du contact à modifier : ");
@@ -107,7 +158,8 @@ namespace GestionContact
                     int index = choix - 1;
                     Contact c = ContactList[index];
                     
-                    Console.WriteLine($"\nModification du contact : {c.Nom} {c.Prenom}");
+                    Console.WriteLine($"\nModification du contact : {c.ToString()}");
+                    Console.WriteLine($"ID: {c.Id}");
                     Console.WriteLine("(Appuyez sur Entrée sans rien écrire pour garder la valeur actuelle)");
 
                     Console.Write($"Nom actuel : {c.Nom}\nNouveau nom : ");
@@ -148,10 +200,11 @@ namespace GestionContact
             {
                 Console.WriteLine("Entrez le nom du contact à rechercher : ");
                 string nom = Console.ReadLine() ?? string.Empty;
-                Contact contact = ContactList.Find(c => c.Nom == nom);
+                Contact? contact = ContactList.Find(c => c.Nom.Equals(nom, StringComparison.OrdinalIgnoreCase));
                 if (contact != null)
                 {
-                    Console.WriteLine($"Contact trouvé : Nom : {contact.Nom}, Prénom : {contact.Prenom}, Email : {contact.Email}, Téléphone : {contact.Telephone}");
+                    Console.WriteLine($"Contact trouvé : {contact.ToString()}");
+                    Console.WriteLine($"ID: {contact.Id}");
                 }
                 else
                 {
@@ -165,6 +218,56 @@ namespace GestionContact
         }
 
         /// <summary>
+        /// Recherche un contact par son ID unique
+        /// </summary>
+        public static void RechercherContactParId(List<Contact> ContactList)
+        {
+            try
+            {
+                Console.WriteLine("Entrez l'ID du contact à rechercher (ou les premiers caractères) : ");
+                string idInput = Console.ReadLine() ?? string.Empty;
+                
+                Contact? contact = null;
+                
+                // Essayer d'abord une correspondance exacte
+                if (Guid.TryParse(idInput, out Guid id))
+                {
+                    contact = ContactList.Find(c => c.Id.Equals(id));
+                }
+                else if (idInput.Length >= 8)
+                {
+                    // Recherche par début d'ID (au moins 8 caractères)
+                    contact = ContactList.Find(c => c.Id.ToString().StartsWith(idInput, StringComparison.OrdinalIgnoreCase));
+                }
+                
+                if (contact != null)
+                {
+                    Console.WriteLine($"Contact trouvé : {contact.ToString()}");
+                    Console.WriteLine($"ID complet: {contact.Id}");
+                }
+                else
+                {
+                    Console.WriteLine("Contact non trouvé ! Vérifiez l'ID ou utilisez au moins 8 caractères.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de la recherche : {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Vérifie s'il existe déjà un contact avec les mêmes informations (évite les doublons)
+        /// </summary>
+        public static bool ContactExiste(List<Contact> ContactList, string nom, string prenom, string email)
+        {
+            return ContactList.Any(c => 
+                c.Nom.Equals(nom, StringComparison.OrdinalIgnoreCase) &&
+                c.Prenom.Equals(prenom, StringComparison.OrdinalIgnoreCase) &&
+                c.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
         /// Affiche la liste complète des contacts
         /// </summary>
         public static void ListerContacts(List<Contact> ContactList)
@@ -175,7 +278,7 @@ namespace GestionContact
                 Console.WriteLine("--------------------");
                 foreach (Contact c in ContactList)
                 {
-                    Console.WriteLine($"Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
+                    Console.WriteLine($"{c.ToString()} (ID: {c.Id.ToString()[..8]}...)");
                 }
                 Console.WriteLine("Nombre de contacts : " + ContactList.Count);
                 Console.WriteLine("--------------------");
@@ -188,7 +291,7 @@ namespace GestionContact
 
         /// <summary>
         /// Sauvegarde la liste des contacts dans un fichier texte
-        /// Format : Nom;Prénom;Email;Téléphone (un contact par ligne)
+        /// Format : ID;Nom;Prénom;Email;Téléphone (un contact par ligne)
         /// </summary>
         public static void SauvegarderContacts(List<Contact> ContactList)
         {
@@ -198,7 +301,7 @@ namespace GestionContact
                 {
                     foreach (Contact c in ContactList)
                     {
-                        writer.WriteLine($"{c.Nom};{c.Prenom};{c.Email};{c.Telephone}");
+                        writer.WriteLine($"{c.Id};{c.Nom};{c.Prenom};{c.Email};{c.Telephone}");
                     }
                 }
                 Console.WriteLine("Contacts sauvegardés avec succès !");
@@ -213,6 +316,7 @@ namespace GestionContact
         /// <summary>
         /// Charge la liste des contacts depuis le fichier texte
         /// Crée une liste vide si le fichier n'existe pas
+        /// Format attendu : ID;Nom;Prénom;Email;Téléphone ou Nom;Prénom;Email;Téléphone (rétrocompatibilité)
         /// </summary>
         public static List<Contact> ChargerContacts()
         {
@@ -227,7 +331,15 @@ namespace GestionContact
                         while ((ligne = reader.ReadLine()) != null)
                         {
                             string[] donnees = ligne.Split(';');
-                            if (donnees.Length == 4)
+                            
+                            if (donnees.Length == 5) // Nouveau format avec ID
+                            {
+                                if (Guid.TryParse(donnees[0], out Guid id))
+                                {
+                                    contacts.Add(new Contact(id, donnees[1], donnees[2], donnees[3], donnees[4]));
+                                }
+                            }
+                            else if (donnees.Length == 4) // Ancien format sans ID (rétrocompatibilité)
                             {
                                 contacts.Add(new Contact(donnees[0], donnees[1], donnees[2], donnees[3]));
                             }
@@ -295,7 +407,7 @@ namespace GestionContact
                 Console.WriteLine("------------------------");
                 foreach (Contact c in ContactList)
                 {
-                    Console.WriteLine($"Nom : {c.Nom}, Prénom : {c.Prenom}, Email : {c.Email}, Téléphone : {c.Telephone}");
+                    Console.WriteLine($"{c.ToString()} (ID: {c.Id.ToString()[..8]}...)");
                 }
                 Console.WriteLine("------------------------");
                 Console.WriteLine("Contacts triés avec succès !");
