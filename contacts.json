@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "dateSauvegarde": "2025-06-14T10:26:50.9033598+02:00",
+  "nombreContacts": 2,
+  "contacts": [
+    {
+      "id": "ad8a46bd-3cea-4532-877c-eb377c35442e",
+      "nom": "Lefevre",
+      "prenom": "Paul",
+      "email": "paullefevre@gmail.com",
+      "telephone": "0602050502"
+    },
+    {
+      "id": "f38e833b-ce22-4354-8610-cfd3bf39ed77",
+      "nom": "Loiseau",
+      "prenom": "Marina",
+      "email": "marinaloiseau@gmail.com",
+      "telephone": "0502050205"
+    }
+  ]
+}

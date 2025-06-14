@@ -45,3 +45,27 @@
 [2025-06-14 10:12:02] [INFO] Début de sauvegarde | Détails: Nombre de contacts: 2
 [2025-06-14 10:12:02] [SUCCESS] Sauvegarde terminée | Détails: Fichier: contacts.txt | Contacts: 2
 [2025-06-14 10:12:02] [INFO] === ARRÊT DU GESTIONNAIRE DE CONTACTS === | Détails: Session terminée
+[2025-06-14 10:26:00] [INFO] === DÉMARRAGE DU GESTIONNAIRE DE CONTACTS === | Détails: Version 2.0 avec logging
+[2025-06-14 10:26:00] [INFO] Application démarrée | Détails: ContactManager v2.0 Json
+[2025-06-14 10:26:00] [INFO] Début de chargement JSON | Détails: Fichier: contacts.json
+[2025-06-14 10:26:00] [INFO] Fichier JSON non trouvé | Détails: Création d'une liste vide
+[2025-06-14 10:26:00] [INFO] Début de chargement des contacts | Détails: Fichier: contacts.txt
+[2025-06-14 10:26:00] [SUCCESS] Chargement terminé | Détails: Contacts chargés: 2 | Anciens formats: 0
+[2025-06-14 10:26:00] [INFO] Contacts chargés depuis TXT | Détails: Nombre: 2
+[2025-06-14 10:26:00] [INFO] Début de sauvegarde JSON | Détails: Nombre de contacts: 2
+[2025-06-14 10:26:00] [SUCCESS] Sauvegarde JSON terminée | Détails: Fichier: contacts.json | Contacts: 2 | Taille: 516 bytes
+[2025-06-14 10:26:00] [INFO] Contacts chargés au démarrage | Détails: Nombre: 2
+[2025-06-14 10:26:06] [INFO] Option sélectionnée: 12 | Détails: Sauvegarder JSON
+[2025-06-14 10:26:06] [INFO] Début de sauvegarde JSON | Détails: Nombre de contacts: 2
+[2025-06-14 10:26:06] [DEBUG] Sauvegarde de sécurité créée | Détails: contacts_backup.json
+[2025-06-14 10:26:06] [SUCCESS] Sauvegarde JSON terminée | Détails: Fichier: contacts.json | Contacts: 2 | Taille: 516 bytes
+[2025-06-14 10:26:27] [INFO] Option sélectionnée: 16 | Détails: Infos fichier JSON
+[2025-06-14 10:26:50] [INFO] Option sélectionnée: 0 | Détails: Quitter
+[2025-06-14 10:26:50] [INFO] Utilisateur a choisi de quitter l'application
+[2025-06-14 10:26:50] [INFO] Sauvegarde automatique avant fermeture
+[2025-06-14 10:26:50] [INFO] Début de sauvegarde JSON | Détails: Nombre de contacts: 2
+[2025-06-14 10:26:50] [DEBUG] Sauvegarde de sécurité créée | Détails: contacts_backup.json
+[2025-06-14 10:26:50] [SUCCESS] Sauvegarde JSON terminée | Détails: Fichier: contacts.json | Contacts: 2 | Taille: 516 bytes
+[2025-06-14 10:26:50] [INFO] Début de sauvegarde | Détails: Nombre de contacts: 2
+[2025-06-14 10:26:50] [SUCCESS] Sauvegarde terminée | Détails: Fichier: contacts.txt | Contacts: 2
+[2025-06-14 10:26:50] [INFO] === ARRÊT DU GESTIONNAIRE DE CONTACTS === | Détails: Session terminée
