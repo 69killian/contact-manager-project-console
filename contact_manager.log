@@ -1,0 +1,47 @@
+[2025-06-14 10:06:55] [INFO] === DÉMARRAGE DU GESTIONNAIRE DE CONTACTS === | Détails: Version 2.0 avec logging
+[2025-06-14 10:06:55] [INFO] Application démarrée | Détails: ContactManager v2.0 avec logging
+[2025-06-14 10:06:55] [INFO] Début de chargement des contacts | Détails: Fichier: contacts.txt
+[2025-06-14 10:06:55] [SUCCESS] Chargement terminé | Détails: Contacts chargés: 2 | Anciens formats: 0
+[2025-06-14 10:06:55] [INFO] Contacts chargés au démarrage | Détails: Nombre: 2
+[2025-06-14 10:08:16] [WARNING] Saisie invalide dans le menu | Détails: Non numérique
+[2025-06-14 10:08:22] [INFO] === DÉMARRAGE DU GESTIONNAIRE DE CONTACTS === | Détails: Version 2.0 avec logging
+[2025-06-14 10:08:22] [INFO] Application démarrée | Détails: ContactManager v2.0 avec logging
+[2025-06-14 10:08:22] [INFO] Début de chargement des contacts | Détails: Fichier: contacts.txt
+[2025-06-14 10:08:22] [SUCCESS] Chargement terminé | Détails: Contacts chargés: 2 | Anciens formats: 0
+[2025-06-14 10:08:22] [INFO] Contacts chargés au démarrage | Détails: Nombre: 2
+[2025-06-14 10:08:27] [INFO] Option sélectionnée: 9 | Détails: Afficher les logs
+[2025-06-14 10:08:39] [INFO] Option sélectionnée: 0 | Détails: Quitter
+[2025-06-14 10:08:39] [INFO] Utilisateur a choisi de quitter l'application
+[2025-06-14 10:08:39] [INFO] Sauvegarde automatique avant fermeture
+[2025-06-14 10:08:39] [INFO] Début de sauvegarde | Détails: Nombre de contacts: 2
+[2025-06-14 10:08:39] [SUCCESS] Sauvegarde terminée | Détails: Fichier: contacts.txt | Contacts: 2
+[2025-06-14 10:08:39] [INFO] === ARRÊT DU GESTIONNAIRE DE CONTACTS === | Détails: Session terminée
+[2025-06-14 10:10:47] [WARNING] Saisie invalide dans le menu | Détails: Non numérique
+[2025-06-14 10:11:28] [INFO] Option sélectionnée: 0 | Détails: Quitter
+[2025-06-14 10:11:28] [INFO] Utilisateur a choisi de quitter l'application
+[2025-06-14 10:11:28] [INFO] Sauvegarde automatique avant fermeture
+[2025-06-14 10:11:30] [INFO] Début de sauvegarde | Détails: Nombre de contacts: 2
+[2025-06-14 10:11:30] [SUCCESS] Sauvegarde terminée | Détails: Fichier: contacts.txt | Contacts: 2
+[2025-06-14 10:11:30] [INFO] === ARRÊT DU GESTIONNAIRE DE CONTACTS === | Détails: Session terminée
+[2025-06-14 10:11:55] [INFO] === DÉMARRAGE DU GESTIONNAIRE DE CONTACTS === | Détails: Version 2.0 avec logging
+[2025-06-14 10:11:55] [INFO] Application démarrée | Détails: ContactManager v2.0 avec logging
+[2025-06-14 10:11:55] [INFO] Début de chargement des contacts | Détails: Fichier: contacts.txt
+[2025-06-14 10:11:55] [SUCCESS] Chargement terminé | Détails: Contacts chargés: 2 | Anciens formats: 0
+[2025-06-14 10:11:55] [INFO] Contacts chargés au démarrage | Détails: Nombre: 2
+[2025-06-14 10:11:57] [INFO] Option sélectionnée: 0 | Détails: Quitter
+[2025-06-14 10:11:57] [INFO] Utilisateur a choisi de quitter l'application
+[2025-06-14 10:11:57] [INFO] Sauvegarde automatique avant fermeture
+[2025-06-14 10:11:57] [INFO] Début de sauvegarde | Détails: Nombre de contacts: 2
+[2025-06-14 10:11:57] [SUCCESS] Sauvegarde terminée | Détails: Fichier: contacts.txt | Contacts: 2
+[2025-06-14 10:11:57] [INFO] === ARRÊT DU GESTIONNAIRE DE CONTACTS === | Détails: Session terminée
+[2025-06-14 10:12:00] [INFO] === DÉMARRAGE DU GESTIONNAIRE DE CONTACTS === | Détails: Version 2.0 avec logging
+[2025-06-14 10:12:00] [INFO] Application démarrée | Détails: ContactManager v2.0 avec logging
+[2025-06-14 10:12:00] [INFO] Début de chargement des contacts | Détails: Fichier: contacts.txt
+[2025-06-14 10:12:00] [SUCCESS] Chargement terminé | Détails: Contacts chargés: 2 | Anciens formats: 0
+[2025-06-14 10:12:00] [INFO] Contacts chargés au démarrage | Détails: Nombre: 2
+[2025-06-14 10:12:02] [INFO] Option sélectionnée: 0 | Détails: Quitter
+[2025-06-14 10:12:02] [INFO] Utilisateur a choisi de quitter l'application
+[2025-06-14 10:12:02] [INFO] Sauvegarde automatique avant fermeture
+[2025-06-14 10:12:02] [INFO] Début de sauvegarde | Détails: Nombre de contacts: 2
+[2025-06-14 10:12:02] [SUCCESS] Sauvegarde terminée | Détails: Fichier: contacts.txt | Contacts: 2
+[2025-06-14 10:12:02] [INFO] === ARRÊT DU GESTIONNAIRE DE CONTACTS === | Détails: Session terminée

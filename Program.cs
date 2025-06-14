@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ContactNamespace;
 using GestionContact;
+using ContactManager.Logging;
 
 namespace ContactManager
 {
@@ -15,81 +16,159 @@ namespace ContactManager
     {
         static void Main(string[] args)
         {
-            // Chargement initial des contacts depuis le fichier
-            List<Contact> ContactList = GestionContact.GestionContact.ChargerContacts();
-            bool continuer = true;
-
-            Console.WriteLine("🎯 Gestionnaire de Contacts Avancé v2.0");
-            Console.WriteLine("Avec identifiants uniques et détection de doublons");
-
-            // Boucle principale du programme
-            while (continuer)
+            // Initialisation du système de logging
+            Logger.Initialize();
+            Logger.LogInfo("Application démarrée", "ContactManager v2.0");
+            
+            try
             {
-                // Affichage du menu principal
-                Console.WriteLine("\n=== 📋 Gestionnaire de Contacts ===");
-                Console.WriteLine("1. ➕ Ajouter un contact (avec vérification doublons)");
-                Console.WriteLine("2. ❌ Supprimer un contact");
-                Console.WriteLine("3. 📄 Lister les contacts");
-                Console.WriteLine("4. 🔍 Rechercher un contact par nom");
-                Console.WriteLine("5. 🆔 Rechercher un contact par ID");
-                Console.WriteLine("6. ✏️  Modifier un contact");
-                Console.WriteLine("7. 🔄 Trier les contacts");
-                Console.WriteLine("8. 💾 Sauvegarder et quitter");
-                Console.Write("Votre choix : ");
+                // Chargement des contacts existants
+                List<Contact> ContactList = GestionContact.GestionContact.ChargerContacts();
+                Logger.LogInfo("Contacts chargés au démarrage", $"Nombre: {ContactList.Count}");
 
-                // Traitement du choix de l'utilisateur
-                string? choix = Console.ReadLine();
-                switch (choix)
+                int choix;
+                do
                 {
-                    case "1": // Ajout d'un contact avec vérification
-                        GestionContact.GestionContact.AjouterContactAvecVerification(ContactList);
-                        GestionContact.GestionContact.SauvegarderContacts(ContactList);
-                        break;
+                    // Affichage du menu principal
+                    Console.WriteLine("\n" + "=".PadRight(60, '='));
+                    Console.WriteLine("📱 GESTIONNAIRE DE CONTACTS");
+                    Console.WriteLine("=".PadRight(60, '='));
+                    Console.WriteLine("1. ➕ Ajouter un contact");
+                    Console.WriteLine("2. 🗑️  Supprimer un contact");
+                    Console.WriteLine("3. ✏️  Modifier un contact");
+                    Console.WriteLine("4. 🔍 Rechercher un contact par nom");
+                    Console.WriteLine("5. 🆔 Rechercher un contact par ID");
+                    Console.WriteLine("6. 📋 Lister tous les contacts");
+                    Console.WriteLine("7. 💾 Sauvegarder les contacts");
+                    Console.WriteLine("8. 🔄 Trier les contacts");
+                    Console.WriteLine("9. 📝 Afficher les logs récents");
+                    Console.WriteLine("10. 📊 Statistiques des logs");
+                    Console.WriteLine("11. 🧹 Nettoyer les anciens logs");
+                    Console.WriteLine("0. 🚪 Quitter");
+                    Console.WriteLine("=".PadRight(60, '='));
+                    Console.Write("Votre choix : ");
 
-                    case "2": // Suppression d'un contact
-                        if (ContactList.Count > 0)
+                    if (int.TryParse(Console.ReadLine(), out choix))
+                    {
+                        Logger.LogInfo($"Option sélectionnée: {choix}", GetMenuOptionName(choix));
+                        
+                        switch (choix)
                         {
-                            GestionContact.GestionContact.SupprimerContact(ContactList);
-                            GestionContact.GestionContact.SauvegarderContacts(ContactList);
+                            case 1:
+                                GestionContact.GestionContact.AjouterContactAvecVerification(ContactList);
+                                break;
+                            case 2:
+                                GestionContact.GestionContact.SupprimerContact(ContactList);
+                                break;
+                            case 3:
+                                GestionContact.GestionContact.ModifierContact(ContactList);
+                                break;
+                            case 4:
+                                GestionContact.GestionContact.RechercherContact(ContactList);
+                                break;
+                            case 5:
+                                GestionContact.GestionContact.RechercherContactParId(ContactList);
+                                break;
+                            case 6:
+                                GestionContact.GestionContact.ListerContacts(ContactList);
+                                break;
+                            case 7:
+                                GestionContact.GestionContact.SauvegarderContacts(ContactList);
+                                break;
+                            case 8:
+                                GestionContact.GestionContact.TrierContacts(ContactList);
+                                break;
+                            case 9:
+                                Console.Write("Nombre de lignes à afficher (défaut 10) : ");
+                                if (int.TryParse(Console.ReadLine(), out int nbLignes) && nbLignes > 0)
+                                {
+                                    Logger.ShowRecentLogs(nbLignes);
+                                }
+                                else
+                                {
+                                    Logger.ShowRecentLogs();
+                                }
+                                break;
+                            case 10:
+                                Logger.ShowLogStats();
+                                break;
+                            case 11:
+                                Console.Write("Nombre de jours à conserver (défaut 30) : ");
+                                if (int.TryParse(Console.ReadLine(), out int jours) && jours > 0)
+                                {
+                                    Logger.CleanupLogs(jours);
+                                    Console.WriteLine($"✅ Logs antérieurs à {jours} jours supprimés.");
+                                }
+                                else
+                                {
+                                    Logger.CleanupLogs();
+                                    Console.WriteLine("✅ Logs antérieurs à 30 jours supprimés.");
+                                }
+                                break;
+                            case 0:
+                                Logger.LogInfo("Utilisateur a choisi de quitter l'application");
+                                Console.WriteLine("👋 Au revoir !");
+                                break;
+                            default:
+                                Console.WriteLine("❌ Choix invalide ! Veuillez réessayer.");
+                                Logger.LogWarning("Choix de menu invalide", $"Valeur: {choix}");
+                                break;
                         }
-                        else
-                        {
-                            Console.WriteLine("Aucun contact à supprimer !");
-                        }
-                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("❌ Veuillez entrer un nombre valide !");
+                        Logger.LogWarning("Saisie invalide dans le menu", "Non numérique");
+                        choix = -1; // Pour continuer la boucle
+                    }
 
-                    case "3": // Affichage de la liste des contacts
-                        GestionContact.GestionContact.ListerContacts(ContactList);
-                        break;
+                    if (choix != 0)
+                    {
+                        Console.WriteLine("\nAppuyez sur une touche pour continuer...");
+                        Console.ReadKey();
+                    }
 
-                    case "4": // Recherche d'un contact par nom
-                        GestionContact.GestionContact.RechercherContact(ContactList);
-                        break;
+                } while (choix != 0);
 
-                    case "5": // Recherche d'un contact par ID
-                        GestionContact.GestionContact.RechercherContactParId(ContactList);
-                        break;
-
-                    case "6": // Modification d'un contact
-                        GestionContact.GestionContact.ModifierContact(ContactList);
-                        GestionContact.GestionContact.SauvegarderContacts(ContactList);
-                        break;
-
-                    case "7": // Tri des contacts
-                        GestionContact.GestionContact.TrierContacts(ContactList);
-                        break;
-
-                    case "8": // Sauvegarde et sortie
-                        GestionContact.GestionContact.SauvegarderContacts(ContactList);
-                        Console.WriteLine("👋 Au revoir ! Vos contacts ont été sauvegardés.");
-                        continuer = false;
-                        break;
-
-                    default: // Choix invalide
-                        Console.WriteLine("❌ Choix invalide ! Veuillez choisir entre 1 et 8.");
-                        break;
-                }
+                // Sauvegarde automatique avant fermeture
+                Logger.LogInfo("Sauvegarde automatique avant fermeture");
+                GestionContact.GestionContact.SauvegarderContacts(ContactList);
             }
+            catch (Exception ex)
+            {
+                Logger.LogException("Main", ex);
+                Console.WriteLine($"❌ Erreur critique : {ex.Message}");
+                Console.WriteLine("Appuyez sur une touche pour fermer...");
+                Console.ReadKey();
+            }
+            finally
+            {
+                // Finalisation du système de logging
+                Logger.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// Retourne le nom de l'option du menu pour le logging
+        /// </summary>
+        private static string GetMenuOptionName(int choix)
+        {
+            return choix switch
+            {
+                1 => "Ajouter un contact",
+                2 => "Supprimer un contact",
+                3 => "Modifier un contact",
+                4 => "Rechercher par nom",
+                5 => "Rechercher par ID",
+                6 => "Lister les contacts",
+                7 => "Sauvegarder",
+                8 => "Trier les contacts",
+                9 => "Afficher les logs",
+                10 => "Statistiques des logs",
+                11 => "Nettoyer les logs",
+                0 => "Quitter",
+                _ => "Option inconnue"
+            };
         }
     }
 }
